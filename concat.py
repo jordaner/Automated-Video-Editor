@@ -49,7 +49,7 @@ def makeTimeWindowFromString(line, index):
 	for stamp in timeWindow:
 		if stamp and not match('(([0-9]:)?[0-5])?[0-9]:[0-5][0-9]$', stamp):
 			print("Invalid timestamp: %s at line %d" % (stamp, index)), exit()
-	return (timeWindow[0], timeWindow[1])
+	return timeWindow
 
 # VIDEO READING
 
@@ -58,21 +58,30 @@ def makeClipsFromTimestamps(timestampDict):
 	for inputName in timestampDict.keys():
 		videoFile = VideoFileClip(inputName + '.MP4')
 		for timeWindow in timestampDict[inputName]:
+			if not timeWindow[0]:
+				timeWindow[0] = "0:00"
+			if not timeWindow[1]:
+				timeWindow[1] = videoFile.end
 			clipList.append(videoFile.subclip(t_start=timeWindow[0], t_end=timeWindow[1]))
 	return clipList
 
 # VIDEO RENDERING
 
-def makeVideoFromClips(cliplist, videoname="output"):
-	final_clip = concatenate_videoclips(cliplist)
-	final_clip.write_videofile(videoname+".mp4")
-	print("Video completed")
+def makeVideoFromClips(cliplist, videoname="output", singleOutput=True):
+	if singleOutput:
+		final_clip = concatenate_videoclips(cliplist)
+		final_clip.write_videofile(videoname+".mp4")
+		print("Video completed")
+	else:
+		for index in range(len(cliplist)):
+			cliplist[index].write_videofile(videoname + str(index+1) + ".mp4")
+			print("Video %d completed"%(index+1))
+		print("All videos completed")
 
 # MAIN
 
 if __name__ == "__main__":
 	parser = ArgumentParser()
-	parser.add_argument("-i", "--input", dest="input_filename", type=str,help="Input video file") # remov?
 	parser.add_argument("-t", "--timestamps", dest="timestamps_filename", type=str, default="timestamps.txt",
 						help="Input timestamps file (timestamps.txt by default)")
 	parser.add_argument("-o", "--output", dest="output_filename", type=str, default="output",
