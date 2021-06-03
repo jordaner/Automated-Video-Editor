@@ -1,0 +1,14 @@
+>>myvideo
+-0:20 # This clip starts at the beginning of the video
+1:50-4:19
+6:20-8:19
+
+>>myothervideo
+3:36-3:46
+4:10-5:58
+7:38-8:08
+
+>>anothervideo
+0:44-1:10
+2:40-3:15
+4:46- # This goes to the end of the video!
