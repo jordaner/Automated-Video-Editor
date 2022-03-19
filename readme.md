@@ -17,6 +17,7 @@ The syntax of the timestamps file is as follows:
  - The format for the time windows is starttime-endtime
  - A time is defined as hour:minute:second
  - Comments can be added using '#', anything to the right of this symbol will not be interpreted
+ - Text can be added to videos by using '$', the text from the rest of the line will be placed on a black background for 2 seconds
  - If a starttime or an endtime are not defined the start/end of the file in question is taken e.g. -0:30 goes from the beginning of the file to the 30th second, 0:30- makes a clip from the 30th second to the end of the video.
 
 ### Launching the script
