@@ -3,6 +3,7 @@
 1:50-4:19
 6:20-8:19
 
+$This adds text into the Video!
 >>myothervideo
 3:36-3:46
 4:10-5:58
